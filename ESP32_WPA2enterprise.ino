@@ -22,11 +22,13 @@ void setup() {
     Serial.println(ssid);
     
     // WPA2 enterprise magic starts here
-    WiFi.disconnect(true);      
+    WiFi.disconnect(true);
+    WiFi.mode(WIFI_STA); //init wifi hardware
     esp_wifi_sta_wpa2_ent_set_identity((uint8_t *)EAP_ID, strlen(EAP_ID));
     esp_wifi_sta_wpa2_ent_set_username((uint8_t *)EAP_USERNAME, strlen(EAP_USERNAME));
     esp_wifi_sta_wpa2_ent_set_password((uint8_t *)EAP_PASSWORD, strlen(EAP_PASSWORD));
-    esp_wifi_sta_wpa2_ent_enable();
+    esp_wpa2_config_t config = WPA2_CONFIG_INIT_DEFAULT(); //set WPA2 config to default
+    esp_wifi_sta_wpa2_ent_enable(&config); //set default config at sta wpa2 mode
     // WPA2 enterprise magic ends here
 
 
